@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<!-- ввод ХТМЛ управляется приложением app -->
+
+<!--
+Если мы используем приложение Ангуляр, то нам нужно к какому -ниб. тегу подвязать аттрибьют ng-app
+Мы хотим, чтобы было какое-то ангуляровское приложение, которое бы управляло данным кодом ( всем кодом в этом файле)
+И мы даем этому приложению имя "app" (имя может быть и любым другим)
+ng - это префикс, по которому можно определять , что это ангуляр.
+-->
+
+<!--далее идет заголовок страницы-->
+<head>
+    <meta charset="UTF-8">
+
+    <!-- что есть в заголовке: бутстрап - это бибилотека для отрисовки элементов, по сути - это пачка стилей.
+     Вставляем версию 5.0.2-->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+
+    <!--  подключаем angular.js:-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
+
+    <!--и ДОБАВЛЯЕМ НАШ ФАЙЛ:-->
+    <script src="index.js"></script>
+
+    <title>Title</title>
+</head>
+
+
+<body>
+
+<!--данный блок управляется нашим контроллером: indexController-->
+<!--когда мы на div вешаем ng-controller="indexController, мы говорим, что весь этот блок будет управляться данным контроллером-->
+<!--называть данный контроллер можем как угодно-->
+<div class="container" ng-controller="indexController">
+    <!--container и btn (ниже) &#45;&#45; это то, что взято из библиотеки бутстрап-->
+    <!-- container - занимает всю страничку и центрирует контент-->
+
+    <h3>List of Products</h3>     <!--заголовок 3го уровня-->
+    <!--    это просто пример scope:-->
+    {{hh}}
+    <table class="table table-hover">    <!--идет табличка -->
+        <tr>
+            <td>ID</td>
+            <td>title</td>
+            <td>cost</td>
+            <td>level</td>
+            <td>Action</td>
+        </tr>
+        <tbody>      <!--началось тело таблицы-->
+        <!--        ng-repeat  - это цикл foreach в ангуляре-->
+        <tr ng-repeat="p in ProductList">    <!-- tr - это строка в таблице-->
+            <td>{{p.id}}</td>    <!-- {{}}  - означает обращение к полю id объекта p; две фигурные скобки на это указывают-->
+            <td>{{p.title}}</td>
+            <td>{{p.cost}}</td>
+
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Delete</button>
+            </td>
+            <!--            добавили пустой столбец, чтобы производить в нем действие, а также кнопку Удалить, окрашенную в красный цвет-->
+            <!--            Двойные фигурные скобки - это ссылка на переменную в scope  ng-click  -- это аналог Листенера -->
+            <td>
+                <button class="btn btn-danger" ng-click="findProduct(p.title)">FindProduct</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="findProductByTitle(text)">FindProductByTitle</button>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- посылаем данные с формы
+-->
+
+    <form novalidate ng-submit="loadProducts()">
+        <div class ="form-group row">
+            <div class ="form-group col-md-3">
+                <label for="filter.min_cost">Minimal cost</label>
+                <input class="form-control" type="number" id="filter.min_cost" ng-model="filter.min_cost" >
+        </div>
+            <div class ="form-group col-md-3">
+                <label for="filter.max_cost">Maximal cost</label>
+                <input class="form-control" type="number" id="filter.max_cost" ng-model="filter.max_cost" >
+            </div>
+        </div>
+   <div>
+       <button class="btn btn-success" type ="submit">Apply</button>
+   </div>
+    </form>
+
+
+
+
+
+</div>
+
+</body>
+</html>
