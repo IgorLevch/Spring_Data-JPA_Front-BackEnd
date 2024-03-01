@@ -80,6 +80,8 @@ $scope - это некий контекст, куда можно складыв�
                .then(function (response)){
                $scope.productId = response.data
                }
+
+
         }
 
 

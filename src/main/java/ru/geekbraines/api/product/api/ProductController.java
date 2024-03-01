@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
-    private ProductService productService;
+    private ProductService  productService;
 
 
     public ProductController(ProductService productService) {
@@ -26,10 +26,12 @@ public class ProductController {
         return List.of(productService.findById(Id).get());    // вернется коллекция, в которой только 1 объект
     }
 
+
     @GetMapping
     public List<Product> getAll(){
         return productService.getAll();
     }
+
 
 
     @GetMapping("/by_title")
@@ -45,7 +47,8 @@ public class ProductController {
     @GetMapping("/search")
     public List<Product> findByTitleCont(@RequestParam String title){
         return productService.findByTitleContaining(title);
-    }
+      }
+
     @GetMapping("/delete/{id}")
     public void delete(@PathVariable Long Id){
         productService.deleteById(Id);
@@ -62,6 +65,8 @@ public class ProductController {
             maxCost=Integer.MAX_VALUE;
         if (page<1)
             page=1;
+
+
 
         return productService.findAllByCostBetween(minCost,maxCost,page);
 
