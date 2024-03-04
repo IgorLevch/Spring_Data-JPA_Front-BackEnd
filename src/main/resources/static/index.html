@@ -43,6 +43,42 @@ ng - это префикс, по которому можно определят�
     <!--container и btn (ниже) &#45;&#45; это то, что взято из библиотеки бутстрап-->
     <!-- container - занимает всю страничку и центрирует контент-->
 
+
+    <!-- посылаем данные с формы
+-->
+
+    <form novalidate ng-submit="loadProducts()">
+        <div class ="form-group row">
+            <div class ="form-floating input-group-sn">
+                <input type = "text" class="form-control" id="filterName" placeholder="" ng-model="filter.title_part">
+                <label for="filterName">Product Title</label>
+            </div>
+            <p></p>
+
+            <div class ="form-floating input-group-sn">
+                <input  type="number" class="form-control" id="filterMinLevel" placeholder="" ng-model="filter.min_level" >
+                <label for="filterMinLevel">Minimal Level</label>
+            </div>
+            <p></p>
+
+
+            <div class ="form-floating input-group-sn">
+                <input type="number"  class="form-control" id="filterMaxLevel" placeholder="" ng-model="filter.max_level" >
+                <label for="filterMaxLevel">Maximal Level</label>
+            </div>
+            <p></p>
+
+            <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type ="submit">Apply</button>
+        </div>
+    </form>
+
+
+
+
+
+
+
+
     <h3>List of Products</h3>     <!--заголовок 3го уровня-->
     <!--    это просто пример scope:-->
     {{hh}}
@@ -61,6 +97,8 @@ ng - это префикс, по которому можно определят�
             <td>{{p.title}}</td>
             <td>{{p.cost}}</td>
 
+
+
             <td>
                 <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Delete</button>
             </td>
@@ -77,27 +115,16 @@ ng - это префикс, по которому можно определят�
         </tbody>
     </table>
 
-    <!-- посылаем данные с формы
--->
+    <p></p>
+    <h3>Add a product via JSON</h3>
 
-    <form novalidate ng-submit="loadProducts()">
-        <div class ="form-group row">
-            <div class ="form-group col-md-3">
-                <label for="filter.min_cost">Minimal cost</label>
-                <input class="form-control" type="number" id="filter.min_cost" ng-model="filter.min_cost" >
-        </div>
-            <div class ="form-group col-md-3">
-                <label for="filter.max_cost">Maximal cost</label>
-                <input class="form-control" type="number" id="filter.max_cost" ng-model="filter.max_cost" >
-            </div>
-        </div>
-   <div>
-       <button class="btn btn-success" type ="submit">Apply</button>
-   </div>
+    <form novalidate ng-submit="createProductJson()">
+        <input type = "text" class="form-control" placeholder="Title" ng-model="newProductJson.title">
+        <p></p>
+        <input type = "number" class="form-control" placeholder="Level" ng-model="newProductJson.level">
+        <p></p>
+        <button type ="submit" class="btn btn-primary">Keep Product's JSON</button>
     </form>
-
-
-
 
 
 </div>

@@ -7,7 +7,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import ru.geekbraines.api.product.data.Product;
 import ru.geekbraines.api.product.repositories.ProductRepository;
-
 @Component
 public class ProductDataGenerator {
 
@@ -34,6 +33,8 @@ public class ProductDataGenerator {
         }
 
     }
+
+
 
 
 }
