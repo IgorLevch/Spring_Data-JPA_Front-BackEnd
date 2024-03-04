@@ -15,7 +15,7 @@ $scope - это некий контекст, куда можно складыв�
 
 /*все, что внутри function(){} - это реализация контролера*/
 
-    const contextPath = 'http://localhost:8080/product';
+    const contextPath = 'http://localhost:8080/api/v1/products';
     /*это константа - мы создали, чтобы знать корень нашего приложения*/
 
     console.log(123);
@@ -37,19 +37,20 @@ $scope - это некий контекст, куда можно складыв�
 
     /*    переписанный метод loadProduct с введением параметров (ДОмашка)с пагинацией:*/
 
-    $scope.loadProducts = function(page = 1) {
+    $scope.loadProducts = function(pageIndex = 1) {
 
     $http ({
         method:'GET',
         url:contextPath,    /*а тут PathVariable*/
         params: {       /*это RequestParam  --  используем что-то одно */
-            min_cost: $scope.filter ? $scope.filter.min_cost : null,  /*к юрл для поиска всех продуктов подвязывается фильтр по мин-й цене. null - это проверка, если фильтр не задан, мы не отправим его с юрл-ом */
-            max_cost: $scope.filter ? $scope.filter.max_cost : null,  /*к юрл для поиска всех продуктов подвязывается фильтр по макс    -й цене. null - это проверка, если фильтр не задан, мы не отправим его с юрл-ом */
+            title_part: $scope.filter ? $scope.filter.title_part: null  /*проверка: если title_part задан, то отправляем его. иначе отправляем null */
+            min_level: $scope.filter ? $scope.filter.min_level : null,  /*к юрл для поиска всех продуктов подвязывается фильтр по мин-й цене. null - это проверка, если фильтр не задан, мы не отправим его с юрл-ом */
+            max_level: $scope.filter ? $scope.filter.max_level : null,  /*к юрл для поиска всех продуктов подвязывается фильтр по макс    -й цене. null - это проверка, если фильтр не задан, мы не отправим его с юрл-ом */
             p : page                                                         /* и номер страницы для пагинации*/
         }
-    }) then.(function (response) {
-        $scope.ProductsPage = response.data;
-        $scope.PageArray = scope.generatePages(1, $scope.ProductsPage.totalPages);
+    }) .then(function (response) {
+        $scope.ProductsList = response.data.content;
+        /*$scope.PageArray = scope.generatePages(1, $scope.ProductsPage.totalPages); Эту строку вроде не нужно */
     });
 
     };
@@ -59,7 +60,7 @@ $scope - это некий контекст, куда можно складыв�
 
 
     $scope.deleteProduct = function (productId) {                       /*писал сам*/
-        $http.get(contextPath + '/delete/' + productId)
+        $http.delete(contextPath + productId)
             .then(function (response) {
                 $scope.loadProducts();
                  console.log(response.data)
@@ -81,6 +82,15 @@ $scope - это некий контекст, куда можно складыв�
                $scope.productId = response.data
                }
 
+
+        }
+
+      $scope.createProductJson = function() {
+      console.log($scope.newProductJson);
+      $http.post(contextPath, $scope.newProductJson)
+        .then(function (response) {
+        $scope.loadProducts();
+        });
 
         }
 
