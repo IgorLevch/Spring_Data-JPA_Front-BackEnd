@@ -43,7 +43,7 @@ $scope - это некий контекст, куда можно складыв�
         method:'GET',
         url:contextPath,    /*а тут PathVariable*/
         params: {       /*это RequestParam  --  используем что-то одно */
-            title_part: $scope.filter ? $scope.filter.title_part: null  /*проверка: если title_part задан, то отправляем его. иначе отправляем null */
+            title_part: $scope.filter ? $scope.filter.title_part: null,           /*проверка: если title_part задан, то отправляем его. иначе отправляем null */
             min_level: $scope.filter ? $scope.filter.min_level : null,  /*к юрл для поиска всех продуктов подвязывается фильтр по мин-й цене. null - это проверка, если фильтр не задан, мы не отправим его с юрл-ом */
             max_level: $scope.filter ? $scope.filter.max_level : null,  /*к юрл для поиска всех продуктов подвязывается фильтр по макс    -й цене. null - это проверка, если фильтр не задан, мы не отправим его с юрл-ом */
             p : page                                                         /* и номер страницы для пагинации*/
@@ -71,19 +71,18 @@ $scope - это некий контекст, куда можно складыв�
 
     $scope.findProduct = function(productId){      /* писал сам - вывод результатов поиска по id: уточнить -- вернется коллекция, в которой только 1 объект */
         $http.get(contextPath + productId)           /*27.31 на видео - разбор такого метода*/
-           .then(function (response)){
+           .then(function (response){
            $scope.ProductList = response.data
-           }
+           });
     }
 
      $scope.findProductByTitle = function(productTitle){      /* писал сам - вывод результатов поиска: уточнить  */
             $http.get(contextPath + productTitle)
-               .then(function (response)){
+               .then(function (response){
                $scope.productId = response.data
-               }
-
-
+               });
         }
+
 
       $scope.createProductJson = function() {
       console.log($scope.newProductJson);
